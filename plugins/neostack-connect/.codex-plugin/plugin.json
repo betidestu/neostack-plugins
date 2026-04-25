@@ -1,0 +1,21 @@
+{
+  "name": "neostack-connect",
+  "version": "0.1.0",
+  "description": "Connect Codex to a running NeoStackAI Unreal editor session.",
+  "author": {
+    "name": "NeoStack",
+    "url": "https://neostack.dev"
+  },
+  "homepage": "https://neostack.dev",
+  "license": "MIT",
+  "keywords": ["unreal", "ue5", "neostack", "mcp"],
+  "mcpServers": "./codex.mcp.json",
+  "interface": {
+    "displayName": "NeoStack Connect",
+    "shortDescription": "Drive a running Unreal editor with NeoStackAI loaded.",
+    "longDescription": "Bridges Codex to the MCP server running inside an open Unreal Engine session that has the NeoStackAI plugin enabled. Discovers the editor automatically by reading runtime.json from the active project.",
+    "developerName": "NeoStack",
+    "category": "Development",
+    "websiteURL": "https://neostack.dev"
+  }
+}

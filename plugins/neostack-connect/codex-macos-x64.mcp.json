@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "neostack": {
+      "command": "./neostack-mcp-proxy",
+      "cwd": "./bin/macos-x64"
+    }
+  }
+}

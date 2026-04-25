@@ -1,0 +1,20 @@
+{
+  "name": "neostack",
+  "owner": {
+    "name": "NeoStack",
+    "email": "support@neostack.dev"
+  },
+  "metadata": {
+    "description": "NeoStackAI plugins for Claude Code — drive a running Unreal editor with the NeoStackAI plugin loaded.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "neostack-connect",
+      "source": "./plugins/neostack-connect",
+      "description": "Connect Claude Code to a running NeoStackAI Unreal editor session.",
+      "category": "development",
+      "keywords": ["unreal", "ue5", "neostack", "mcp"]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "neostack": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/win64/neostack-mcp-proxy.exe"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "neostack-connect",
+  "version": "0.1.0",
+  "description": "Connect Claude Code to a running NeoStackAI Unreal editor session.",
+  "author": {
+    "name": "NeoStack",
+    "url": "https://neostack.dev"
+  },
+  "homepage": "https://neostack.dev",
+  "license": "MIT",
+  "keywords": ["unreal", "ue5", "neostack", "mcp"]
+}

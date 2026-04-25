@@ -1,0 +1,9 @@
+# Force LF for files executed on Unix
+*.sh text eol=lf
+
+# Force CRLF for Windows batch scripts
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# Treat compiled binaries as binary (no eol conversion, no diff)
+plugins/*/bin/**/* binary

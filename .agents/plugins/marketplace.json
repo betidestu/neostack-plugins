@@ -1,0 +1,16 @@
+{
+  "name": "neostack",
+  "interface": {
+    "displayName": "NeoStack"
+  },
+  "plugins": [
+    {
+      "name": "neostack-connect",
+      "source": {
+        "source": "local",
+        "path": "./plugins/neostack-connect"
+      },
+      "category": "Development"
+    }
+  ]
+}
