@@ -1,6 +1,6 @@
 {
   "name": "neostack-connect",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connect Claude Code to a running NeoStackAI Unreal editor session.",
   "author": {
     "name": "NeoStack",
@@ -8,5 +8,13 @@
   },
   "homepage": "https://neostack.dev",
   "license": "MIT",
-  "keywords": ["unreal", "ue5", "neostack", "mcp"]
+  "keywords": ["unreal", "ue5", "neostack", "mcp"],
+  "userConfig": {
+    "project_dir": {
+      "type": "directory",
+      "title": "Unreal project directory",
+      "description": "Path to the folder that contains your .uproject file. The proxy reads <project>/Saved/NeoStackAI/runtime.json to find the running editor. Without this set, discovery falls back to walking up from the current working directory to find a .uproject — which only works if you launch your client from inside the project dir.",
+      "required": true
+    }
+  }
 }
