@@ -82,7 +82,9 @@ build_one() {
 }
 MANIFEST
 
-  local out="$DIST/neostack-connect-$plat-$VERSION.mcpb"
+  # Stable filenames (no embedded version) so docs can link to
+  # /releases/latest/download/neostack-connect-<plat>.mcpb forever.
+  local out="$DIST/neostack-connect-$plat.mcpb"
   mcpb pack "$stage" "$out"
   echo "Packed $out"
 }
