@@ -53,7 +53,7 @@ build_one() {
   "homepage": "https://neostack.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/betidestudio/neostack-plugins"
+    "url": "https://github.com/betidestu/neostack-plugins"
   },
   "license": "MIT",
   "keywords": ["unreal", "ue5", "neostack", "mcp"],

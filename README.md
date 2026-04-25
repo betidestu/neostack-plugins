@@ -15,7 +15,7 @@ claude
 Then inside Claude Code:
 
 ```
-/plugin marketplace add betidestudio/neostack-plugins
+/plugin marketplace add betidestu/neostack-plugins
 /plugin install neostack-connect@neostack
 /reload-plugins
 ```
@@ -25,7 +25,7 @@ Verify with `/mcp` — you should see `neostack` connected. No platform-specific
 ### Codex CLI
 
 ```bash
-codex plugin marketplace add betidestudio/neostack-plugins
+codex plugin marketplace add betidestu/neostack-plugins
 codex
 ```
 
