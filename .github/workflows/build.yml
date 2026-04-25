@@ -1,0 +1,63 @@
+name: Build proxy binaries
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plugins/*/proxy/**'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Skip self-triggered runs from the bot's own commit so we don't loop.
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Cross-compile all platforms
+        run: |
+          set -e
+          for proxy_dir in plugins/*/proxy; do
+            echo "::group::Building $proxy_dir"
+            (cd "$proxy_dir" && bash build.sh)
+            echo "::endgroup::"
+          done
+
+      - name: Restore +x bit on Unix binaries
+        # Cross-compile output bits don't carry into git's index — set them explicitly
+        # so the next commit records them correctly.
+        run: |
+          for f in plugins/*/bin/macos-arm64/* plugins/*/bin/macos-x64/* plugins/*/bin/linux-x64/*; do
+            [ -f "$f" ] && chmod +x "$f"
+          done
+
+      - name: Commit rebuilt binaries
+        run: |
+          git config user.name  "neostack-bot"
+          git config user.email "bot@neostack.dev"
+
+          git add plugins/*/bin/
+
+          if git diff --cached --quiet; then
+            echo "No binary changes — proxy source touched but output is identical."
+            exit 0
+          fi
+
+          # Mark the executable bit in the index for Unix binaries (chmod alone doesn't reach the index).
+          for f in plugins/*/bin/macos-arm64/* plugins/*/bin/macos-x64/* plugins/*/bin/linux-x64/*; do
+            [ -f "$f" ] && git update-index --chmod=+x "$f"
+          done
+
+          git commit -m "ci: rebuild proxy binaries [skip ci]" \
+                     -m "Triggered by ${GITHUB_SHA::8} on ${GITHUB_REF_NAME}."
+
+          git push origin HEAD:${GITHUB_REF_NAME}
