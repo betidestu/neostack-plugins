@@ -49,6 +49,21 @@ jobs:
             (cd "$mcpb_dir" && bash build.sh)
           done
 
+      - name: Build plugin .zip (for Claude Desktop "Upload local plugin")
+        run: |
+          set -e
+          for plugin_dir in plugins/*/; do
+            name="$(basename "$plugin_dir")"
+            out="$plugin_dir/dist/$name.zip"
+            mkdir -p "$plugin_dir/dist"
+            rm -f "$out"
+            # Zip just the plugin contents users need at runtime — exclude
+            # source (proxy/), build artifacts (mcpb/), and our own dist/.
+            (cd plugins && zip -r "$name/dist/$name.zip" "$name" \
+              -x "$name/proxy/*" "$name/mcpb/*" "$name/dist/*")
+            ls -lh "$out"
+          done
+
       - name: Create GitHub Release with all artifacts
         uses: softprops/action-gh-release@v2
         with:
@@ -57,3 +72,4 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             plugins/*/mcpb/dist/*.mcpb
+            plugins/*/dist/*.zip

@@ -8,6 +8,7 @@ Thumbs.db
 # Go scratch
 plugins/*/proxy/*.test
 
-# .mcpb build outputs (shipped via GitHub Releases, not committed)
+# .mcpb and .zip build outputs (shipped via GitHub Releases, not committed)
 plugins/*/mcpb/dist/
 plugins/*/mcpb/stage/
+plugins/*/dist/
