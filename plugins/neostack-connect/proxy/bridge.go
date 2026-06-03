@@ -53,7 +53,6 @@ func (b *httpBridge) run(ctx context.Context) error {
 		// Copy because scanner reuses its buffer.
 		msg := append([]byte(nil), line...)
 		if err := b.forward(ctx, msg); err != nil {
-			fmt.Fprintf(os.Stderr, "neostack-connect: forward error: %v\n", err)
 			return err
 		}
 	}

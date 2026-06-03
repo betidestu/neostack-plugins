@@ -44,14 +44,14 @@ Run the one-time setup from the installed plugin directory. Codex prints the ins
 Windows:
 
 ```bat
-cd %USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.4
+cd %USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.5
 setup.cmd
 ```
 
 macOS / Linux:
 
 ```sh
-cd ~/.codex/plugins/cache/neostack/neostack-connect/0.1.4
+cd ~/.codex/plugins/cache/neostack/neostack-connect/0.1.5
 ./setup.sh
 ```
 

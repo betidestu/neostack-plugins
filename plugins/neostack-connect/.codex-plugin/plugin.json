@@ -1,6 +1,6 @@
 {
   "name": "neostack-connect",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Connect Codex to a running NeoStackAI Unreal editor session.",
   "author": {
     "name": "NeoStack",

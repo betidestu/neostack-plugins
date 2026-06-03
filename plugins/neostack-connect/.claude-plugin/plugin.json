@@ -1,7 +1,7 @@
 {
   "name": "neostack-connect",
   "displayName": "NeoStack Connect",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Connect Claude Code to a running NeoStackAI Unreal editor session.",
   "author": {
     "name": "NeoStack",

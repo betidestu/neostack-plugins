@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"encoding/json"
-	"fmt"
 	"os"
 	"sync"
 )
@@ -14,12 +13,6 @@ import (
 // returning the discovery error. The LLM can call that tool and relay the
 // fix to the user in plain language.
 func runDiagnosticMode(de *discoveryError) {
-	fmt.Fprintf(os.Stderr, "neostack-connect: %s\n", de.msg)
-	if de.hint != "" {
-		fmt.Fprintf(os.Stderr, "hint: %s\n", de.hint)
-	}
-	fmt.Fprintln(os.Stderr, "neostack-connect: entering diagnostic mode — the LLM will surface this via the `unreal_status` tool.")
-
 	body := de.msg
 	if de.hint != "" {
 		body = "neostack-connect is not connected to an Unreal editor.\n\n" +
@@ -57,7 +50,7 @@ func runDiagnosticMode(de *discoveryError) {
 					"capabilities":    map[string]any{"tools": map[string]any{}},
 					"serverInfo": map[string]any{
 						"name":    "neostack-connect (diagnostic)",
-						"version": "0.1.4",
+						"version": "0.1.5",
 					},
 				},
 			})

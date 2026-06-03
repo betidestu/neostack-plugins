@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"errors"
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -19,13 +18,8 @@ func main() {
 			runDiagnosticMode(de)
 			return
 		}
-		fmt.Fprintf(os.Stderr, "neostack-connect: fatal: %v\n", err)
 		os.Exit(2)
 	}
-
-	fmt.Fprintf(os.Stderr,
-		"neostack-connect: connecting to '%s' at %s\n",
-		editor.ProjectName, editor.URL)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -39,7 +33,6 @@ func main() {
 
 	bridge := newHTTPBridge(editor.URL)
 	if err := bridge.run(ctx); err != nil {
-		fmt.Fprintf(os.Stderr, "neostack-connect: %v\n", err)
 		os.Exit(2)
 	}
 }
