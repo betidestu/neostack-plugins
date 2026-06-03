@@ -53,10 +53,14 @@ setup.cmd
 
 This swaps in the right configs, marks the binary executable, and clears macOS Gatekeeper quarantine. Then run `/reload-plugins` in Claude Code/Codex, or restart the app.
 
-Codex prints the installed plugin root after `codex plugin add neostack-connect@neostack`. For marketplace installs, it is usually:
+After `codex plugin add neostack-connect@neostack`, run `codex plugin list` and use the `PATH` column for `neostack-connect@neostack` as the plugin directory. On current Codex builds this may be a marketplace snapshot path under `.codex/.tmp/marketplaces`, even if `codex plugin add` prints a cache path.
+
+Common paths:
 
 - Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.6`
+- Windows: `%USERPROFILE%\.codex\.tmp\marketplaces\neostack\plugins\neostack-connect`
 - macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.6`
+- macOS / Linux: `~/.codex/.tmp/marketplaces/neostack/plugins/neostack-connect`
 
 Tracking upstream — env var expansion in Codex MCP config: [openai/codex#2680](https://github.com/openai/codex/issues/2680). Once that lands we collapse the four configs back into one.
 
