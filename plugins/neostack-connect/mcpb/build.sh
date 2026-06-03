@@ -9,7 +9,7 @@
 set -e
 cd "$(dirname "$0")"
 
-VERSION="${VERSION:-0.1.7}"
+VERSION="${VERSION:-0.1.8}"
 PLUGIN_ROOT="$(cd .. && pwd)"
 BIN_ROOT="$PLUGIN_ROOT/bin"
 DIST="$PWD/dist"

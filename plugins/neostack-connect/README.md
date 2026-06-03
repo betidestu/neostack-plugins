@@ -57,9 +57,9 @@ After `codex plugin add neostack-connect@neostack`, run `codex plugin list` and 
 
 Common paths:
 
-- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.7`
+- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.8`
 - Windows: `%USERPROFILE%\.codex\.tmp\marketplaces\neostack\plugins\neostack-connect`
-- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.7`
+- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.8`
 - macOS / Linux: `~/.codex/.tmp/marketplaces/neostack/plugins/neostack-connect`
 
 Tracking upstream — env var expansion in Codex MCP config: [openai/codex#2680](https://github.com/openai/codex/issues/2680). Once that lands we collapse the four configs back into one.

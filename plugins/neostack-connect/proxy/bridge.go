@@ -125,6 +125,11 @@ func (b *httpBridge) forward(ctx context.Context, body []byte) error {
 }
 
 func (b *httpBridge) writeStdoutLine(body []byte) error {
+	var compacted bytes.Buffer
+	if err := json.Compact(&compacted, body); err == nil {
+		body = compacted.Bytes()
+	}
+
 	b.stdoutMu.Lock()
 	defer b.stdoutMu.Unlock()
 	if _, err := os.Stdout.Write(body); err != nil {

@@ -50,7 +50,7 @@ func runDiagnosticMode(de *discoveryError) {
 					"capabilities":    map[string]any{"tools": map[string]any{}},
 					"serverInfo": map[string]any{
 						"name":    "neostack-connect (diagnostic)",
-						"version": "0.1.7",
+						"version": "0.1.8",
 					},
 				},
 			})
