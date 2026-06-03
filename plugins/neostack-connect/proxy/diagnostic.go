@@ -50,7 +50,7 @@ func runDiagnosticMode(de *discoveryError) {
 					"capabilities":    map[string]any{"tools": map[string]any{}},
 					"serverInfo": map[string]any{
 						"name":    "neostack-connect (diagnostic)",
-						"version": "0.1.5",
+						"version": "0.1.6",
 					},
 				},
 			})
@@ -72,19 +72,39 @@ func runDiagnosticMode(de *discoveryError) {
 								"properties": map[string]any{},
 							},
 						},
+						{
+							"name":        "list_unreal_projects",
+							"description": "Lists active NeoStackAI-enabled Unreal editor projects discovered on this machine.",
+							"inputSchema": map[string]any{
+								"type":       "object",
+								"properties": map[string]any{},
+							},
+						},
 					},
 				},
 			})
 
 		case "tools/call":
+			name := ""
+			if params, ok := req["params"].(map[string]any); ok {
+				name, _ = params["name"].(string)
+			}
+
+			text := body
+			isError := true
+			if name == "list_unreal_projects" {
+				text = discoveredProjectsText()
+				isError = false
+			}
+
 			send(map[string]any{
 				"jsonrpc": "2.0",
 				"id":      id,
 				"result": map[string]any{
 					"content": []map[string]any{
-						{"type": "text", "text": body},
+						{"type": "text", "text": text},
 					},
-					"isError": true,
+					"isError": isError,
 				},
 			})
 
@@ -101,4 +121,12 @@ func runDiagnosticMode(de *discoveryError) {
 			}
 		}
 	}
+}
+
+func discoveredProjectsText() string {
+	editors, err := activeEditorsFromRegistry()
+	if err != nil {
+		return err.Error()
+	}
+	return formatEditorChoices(editors)
 }

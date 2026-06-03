@@ -9,7 +9,7 @@
 set -e
 cd "$(dirname "$0")"
 
-VERSION="${VERSION:-0.1.0}"
+VERSION="${VERSION:-0.1.6}"
 PLUGIN_ROOT="$(cd .. && pwd)"
 BIN_ROOT="$PLUGIN_ROOT/bin"
 DIST="$PWD/dist"
@@ -45,7 +45,7 @@ build_one() {
   "display_name": "NeoStack Connect",
   "version": "$VERSION",
   "description": "Connect Claude Desktop to a running NeoStackAI Unreal editor.",
-  "long_description": "Bridges Claude Desktop's MCP support to the HTTP MCP server inside an open Unreal Engine session that has the NeoStackAI plugin enabled. You point it at your project folder once at install; from then on it auto-discovers the editor whenever it's running.",
+  "long_description": "Bridges Claude Desktop's MCP support to the HTTP MCP server inside an open Unreal Engine session that has the NeoStackAI plugin enabled. Set a project folder to pin this extension to one project, or leave it unset to auto-connect when exactly one NeoStackAI-enabled editor is running.",
   "author": {
     "name": "NeoStack",
     "url": "https://neostack.dev"
@@ -67,6 +67,10 @@ build_one() {
     {
       "name": "unreal_status",
       "description": "Report why NeoStack Connect cannot reach the Unreal editor when discovery fails."
+    },
+    {
+      "name": "list_unreal_projects",
+      "description": "List active NeoStackAI-enabled Unreal editor projects when discovery is ambiguous."
     }
   ],
   "tools_generated": true,
@@ -85,8 +89,8 @@ build_one() {
     "project_dir": {
       "type": "directory",
       "title": "Unreal project directory",
-      "description": "Path to the folder that contains your .uproject file. The proxy reads <project>/Saved/NeoStackAI/runtime.json to find the running editor.",
-      "required": true
+      "description": "Optional path to the folder that contains your .uproject file. Set this when multiple Unreal editors may be open.",
+      "required": false
     }
   },
   "compatibility": {

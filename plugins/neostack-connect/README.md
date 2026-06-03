@@ -4,13 +4,19 @@ Stdio MCP proxy that bridges Claude Code / Codex to a running NeoStackAI Unreal 
 
 ## How discovery works
 
-When the editor is open with NeoStackAI loaded, it writes `<ProjectDir>/Saved/NeoStackAI/runtime.json` with the live MCP server URL and a heartbeat timestamp. The proxy:
+When the editor is open with NeoStackAI loaded, it writes `<ProjectDir>/Saved/NeoStackAI/runtime.json` with the live MCP server URL and a heartbeat timestamp. It also publishes active editor sessions to a machine-level registry:
+
+- Windows: `%LOCALAPPDATA%\NeoStackAI\runtimes.json`
+- macOS / Linux: `~/.neostack/runtimes.json`
+
+The proxy:
 
 1. Walks up from the current working directory looking for a `.uproject` file. Override with `NEOSTACK_PROJECT_DIR=<abs-path>`.
-2. Reads `<ProjectDir>/Saved/NeoStackAI/runtime.json`.
-3. Validates the heartbeat is fresh (< 30s old) and `mcpRunning` is true.
-4. Connects to the first `http`-type MCP server in the file.
-5. Bridges stdio MCP frames to that HTTP endpoint for the lifetime of the session.
+2. Reads `<ProjectDir>/Saved/NeoStackAI/runtime.json` when a project context is available.
+3. Falls back to the machine-level runtime registry when no project context exists, or when the registry has a fresh entry for the current project.
+4. Auto-connects only when discovery resolves to exactly one active editor. If several editors are active and no project context disambiguates them, diagnostic mode reports the available project paths.
+5. Validates the heartbeat is fresh (< 30s old), `mcpRunning` is true, and connects to the first `http`-type MCP server.
+6. Bridges stdio MCP frames to that HTTP endpoint for the lifetime of the session.
 
 ## Failure modes
 
@@ -18,6 +24,7 @@ The proxy exits with a clear message if:
 
 - No `.uproject` is found by walking up from cwd
 - The runtime file doesn't exist (editor not running or NeoStackAI not loaded)
+- Multiple active editors are running and no project context was available
 - The heartbeat is stale (editor crashed or unresponsive)
 - The MCP server isn't running inside the editor
 
@@ -48,8 +55,8 @@ This swaps in the right configs, marks the binary executable, and clears macOS G
 
 Codex prints the installed plugin root after `codex plugin add neostack-connect@neostack`. For marketplace installs, it is usually:
 
-- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.5`
-- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.5`
+- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.6`
+- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.6`
 
 Tracking upstream — env var expansion in Codex MCP config: [openai/codex#2680](https://github.com/openai/codex/issues/2680). Once that lands we collapse the four configs back into one.
 
