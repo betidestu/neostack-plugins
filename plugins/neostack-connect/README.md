@@ -48,8 +48,8 @@ This swaps in the right configs, marks the binary executable, and clears macOS G
 
 Codex prints the installed plugin root after `codex plugin add neostack-connect@neostack`. For marketplace installs, it is usually:
 
-- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.3`
-- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.3`
+- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.4`
+- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.4`
 
 Tracking upstream — env var expansion in Codex MCP config: [openai/codex#2680](https://github.com/openai/codex/issues/2680). Once that lands we collapse the four configs back into one.
 

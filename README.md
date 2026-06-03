@@ -44,14 +44,14 @@ Run the one-time setup from the installed plugin directory. Codex prints the ins
 Windows:
 
 ```bat
-cd %USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.3
+cd %USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.4
 setup.cmd
 ```
 
 macOS / Linux:
 
 ```sh
-cd ~/.codex/plugins/cache/neostack/neostack-connect/0.1.3
+cd ~/.codex/plugins/cache/neostack/neostack-connect/0.1.4
 ./setup.sh
 ```
 
@@ -85,6 +85,8 @@ cd plugins/neostack-connect/proxy
 bash build.sh             # all platforms
 bash build.sh win64       # one platform
 ```
+
+Claude Desktop release bundles are built as `.mcpb` files with `.dxt` aliases so both the current MCPB tooling and Claude Desktop's in-app Extension installer are covered.
 
 ## Source repo
 

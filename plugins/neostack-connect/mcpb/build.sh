@@ -1,6 +1,6 @@
 #!/bin/sh
-# Build per-platform .mcpb Desktop Extensions for Claude Desktop.
-# Produces 4 .mcpb files in dist/, one per OS+arch.
+# Build per-platform Desktop Extensions for Claude Desktop.
+# Produces .mcpb files and .dxt aliases in dist/, one per OS+arch.
 #
 # Prerequisites:
 #   npm install -g @anthropic-ai/mcpb
@@ -103,6 +103,7 @@ MANIFEST
   local out="$DIST/neostack-connect-$plat.mcpb"
   mcpb pack "$stage" "$out"
   mcpb clean "$out"
+  cp "$out" "$DIST/neostack-connect-$plat.dxt"
   echo "Packed $out"
 }
 

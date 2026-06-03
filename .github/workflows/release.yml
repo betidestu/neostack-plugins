@@ -92,4 +92,5 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             plugins/*/mcpb/dist/*.mcpb
+            plugins/*/mcpb/dist/*.dxt
             plugins/*/dist/*.zip
