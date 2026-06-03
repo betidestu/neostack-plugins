@@ -50,12 +50,15 @@ jobs:
           done
 
       - name: Sign .mcpb Desktop Extensions
-        if: ${{ secrets.MCPB_SIGN_CERT_PEM != '' && secrets.MCPB_SIGN_KEY_PEM != '' }}
         env:
           MCPB_SIGN_CERT_PEM: ${{ secrets.MCPB_SIGN_CERT_PEM }}
           MCPB_SIGN_KEY_PEM: ${{ secrets.MCPB_SIGN_KEY_PEM }}
         run: |
           set -e
+          if [ -z "$MCPB_SIGN_CERT_PEM" ] || [ -z "$MCPB_SIGN_KEY_PEM" ]; then
+            echo "MCPB signing secrets are not configured; leaving bundles unsigned."
+            exit 0
+          fi
           cert="$(mktemp)"
           key="$(mktemp)"
           printf '%s' "$MCPB_SIGN_CERT_PEM" > "$cert"
