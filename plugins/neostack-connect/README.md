@@ -37,7 +37,7 @@ So we ship pre-built configs for each supported platform:
 - `claude-windows.mcp.json`, `claude-macos-arm64.mcp.json`, `claude-macos-x64.mcp.json`, `claude-linux-x64.mcp.json`
 - `codex-windows.mcp.json`, `codex-macos-arm64.mcp.json`, `codex-macos-x64.mcp.json`, `codex-linux-x64.mcp.json`
 
-The setup script copies the right Claude config into `.mcp.json`. For Codex, it generates `codex.mcp.json` with an absolute proxy binary path and no `cwd`; that keeps Codex's process working directory on the active Unreal project so `.uproject` discovery works.
+The setup script copies the right Claude config into `.mcp.json`. For Codex, it generates `codex.mcp.json` and also runs `codex mcp add neostack -- <absolute proxy path>` when the Codex CLI is available. That keeps Codex's process working directory on the active Unreal project so `.uproject` discovery works.
 
 **Windows**: from the plugin's install dir, run once:
 
@@ -57,9 +57,9 @@ After `codex plugin add neostack-connect@neostack`, run `codex plugin list` and 
 
 Common paths:
 
-- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.6`
+- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.7`
 - Windows: `%USERPROFILE%\.codex\.tmp\marketplaces\neostack\plugins\neostack-connect`
-- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.6`
+- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.7`
 - macOS / Linux: `~/.codex/.tmp/marketplaces/neostack/plugins/neostack-connect`
 
 Tracking upstream — env var expansion in Codex MCP config: [openai/codex#2680](https://github.com/openai/codex/issues/2680). Once that lands we collapse the four configs back into one.

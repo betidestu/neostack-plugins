@@ -33,6 +33,13 @@ cat > "$DIR/codex.mcp.json" <<EOF
 }
 EOF
 
+if command -v codex >/dev/null 2>&1; then
+  codex mcp add neostack -- "$CODEX_PROXY" >/dev/null
+  echo "Registered neostack with Codex using an absolute proxy path."
+else
+  echo "Codex CLI not found on PATH; generated codex.mcp.json only."
+fi
+
 # Make the binary executable (zip extraction loses +x on some platforms).
 case "$(uname -s)-$(uname -m)" in
   Darwin-arm64)  chmod +x "$DIR/bin/macos-arm64/neostack-mcp-proxy"  ;;

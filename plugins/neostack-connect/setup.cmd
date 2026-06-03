@@ -26,4 +26,13 @@ set "PROXY=%DIR%bin\win64\neostack-mcp-proxy.exe"
   echo   }
   echo }
 ) > "%DIR%codex.mcp.json"
+
+where codex >nul 2>nul
+if %ERRORLEVEL% EQU 0 (
+  codex mcp add neostack -- "%PROXY%" >nul
+  echo Registered neostack with Codex using an absolute proxy path.
+) else (
+  echo Codex CLI not found on PATH; generated codex.mcp.json only.
+)
+
 echo Configured .mcp.json and codex.mcp.json for Windows. Run /reload-plugins or restart the app.
