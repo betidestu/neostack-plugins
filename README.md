@@ -20,7 +20,15 @@ Then inside Claude Code:
 /reload-plugins
 ```
 
-Verify with `/mcp` — you should see `neostack` connected. No platform-specific setup needed.
+Verify with `/mcp` — you should see `neostack` connected.
+
+**macOS / Linux only**: run the one-time setup so the plugin selects the right native proxy binary for your OS:
+
+```sh
+~/.claude/plugins/cache/neostack/neostack-connect/*/setup.sh
+```
+
+Then run `/reload-plugins` or restart Claude Code. Windows works out of the box.
 
 ### Codex CLI
 
@@ -31,13 +39,21 @@ codex
 
 Inside Codex, open `/plugins`, find **neostack-connect**, press Space to enable.
 
-**macOS / Linux only**: run the one-time setup so Codex picks the right binary for your OS:
+Run the one-time setup from the installed plugin directory. Codex prints the installed plugin root after `codex plugin add neostack-connect@neostack`; run the setup script from that exact folder. Codex needs this on every OS because its plugin loader does not substitute plugin-root variables in MCP command paths, and NeoStack discovery needs Codex to keep the working directory on your Unreal project.
 
-```sh
-~/.codex/plugins/neostack-connect/setup.sh
+Windows:
+
+```bat
+cd %USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.3
+setup.cmd
 ```
 
-(Windows works out of the box.)
+macOS / Linux:
+
+```sh
+cd ~/.codex/plugins/cache/neostack/neostack-connect/0.1.3
+./setup.sh
+```
 
 ## What's here
 
@@ -52,9 +68,10 @@ Inside Codex, open `/plugins`, find **neostack-connect**, press Space to enable.
 └── plugins/neostack-connect/
     ├── .claude-plugin/plugin.json
     ├── .codex-plugin/plugin.json
-    ├── .mcp.json                       # Claude Code uses ${CLAUDE_PLUGIN_ROOT}
-    ├── codex*.mcp.json                 # one per OS (Codex doesn't substitute env vars)
-    ├── setup.sh / setup.cmd            # picks the right Codex config per OS
+    ├── .mcp.json                       # active Claude Code MCP config
+    ├── claude*.mcp.json                # one per OS (setup copies the active config)
+    ├── codex*.mcp.json                 # platform templates
+    ├── setup.sh / setup.cmd            # generates active Claude/Codex configs per OS
     ├── bin/<platform>/neostack-mcp-proxy[.exe]
     └── proxy/                          # Go source — `bash build.sh` to recompile
 ```

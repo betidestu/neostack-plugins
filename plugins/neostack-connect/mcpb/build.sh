@@ -51,12 +51,25 @@ build_one() {
     "url": "https://neostack.dev"
   },
   "homepage": "https://neostack.dev",
+  "documentation": "https://neostack.dev/docs/claude-desktop",
+  "support": "https://discord.gg/betide",
   "repository": {
     "type": "git",
     "url": "https://github.com/betidestu/neostack-plugins"
   },
   "license": "MIT",
   "keywords": ["unreal", "ue5", "neostack", "mcp"],
+  "tools": [
+    {
+      "name": "execute_script",
+      "description": "Run a NeoStack Lua script in the connected Unreal editor."
+    },
+    {
+      "name": "unreal_status",
+      "description": "Report why NeoStack Connect cannot reach the Unreal editor when discovery fails."
+    }
+  ],
+  "tools_generated": true,
   "server": {
     "type": "binary",
     "entry_point": "server/$dest_bin",
@@ -77,15 +90,19 @@ build_one() {
     }
   },
   "compatibility": {
+    "claude_desktop": ">=0.10.0",
     "platforms": ["$os"]
   }
 }
 MANIFEST
 
+  mcpb validate "$stage/manifest.json"
+
   # Stable filenames (no embedded version) so docs can link to
   # /releases/latest/download/neostack-connect-<plat>.mcpb forever.
   local out="$DIST/neostack-connect-$plat.mcpb"
   mcpb pack "$stage" "$out"
+  mcpb clean "$out"
   echo "Packed $out"
 }
 

@@ -21,11 +21,22 @@ The proxy exits with a clear message if:
 - The heartbeat is stale (editor crashed or unresponsive)
 - The MCP server isn't running inside the editor
 
-## Codex setup (one-time, Mac/Linux only)
+## Platform setup
 
-Codex's plugin loader (per `codex-rs/core-plugins/src/loader.rs`) doesn't substitute `${...}` in `.mcp.json` and only resolves the `cwd` field against plugin root — there's no way to write a single Codex config that works on every OS. So we ship four pre-built configs (`codex-windows.mcp.json`, `codex-macos-arm64.mcp.json`, `codex-macos-x64.mcp.json`, `codex-linux-x64.mcp.json`) and a `setup` script that copies the right one into `codex.mcp.json`.
+Claude Code expands `${CLAUDE_PLUGIN_ROOT}` and `${CLAUDE_PROJECT_DIR}`, but it does not select platform-specific binary paths for us. Codex's plugin loader also does not substitute `${...}` in plugin MCP configs and only resolves `cwd` against plugin root.
 
-**Windows**: nothing to do — the shipped `codex.mcp.json` already targets Windows. (You can run `setup.cmd` to make it explicit.)
+So we ship pre-built configs for each supported platform:
+
+- `claude-windows.mcp.json`, `claude-macos-arm64.mcp.json`, `claude-macos-x64.mcp.json`, `claude-linux-x64.mcp.json`
+- `codex-windows.mcp.json`, `codex-macos-arm64.mcp.json`, `codex-macos-x64.mcp.json`, `codex-linux-x64.mcp.json`
+
+The setup script copies the right Claude config into `.mcp.json`. For Codex, it generates `codex.mcp.json` with an absolute proxy binary path and no `cwd`; that keeps Codex's process working directory on the active Unreal project so `.uproject` discovery works.
+
+**Windows**: from the plugin's install dir, run once:
+
+```bat
+setup.cmd
+```
 
 **Mac / Linux**: from the plugin's install dir, run once:
 
@@ -33,18 +44,19 @@ Codex's plugin loader (per `codex-rs/core-plugins/src/loader.rs`) doesn't substi
 ./setup.sh
 ```
 
-This swaps in the right config, marks the binary executable, and clears macOS Gatekeeper quarantine. Then `codex /reload-plugins` (or restart Codex) and you're set.
+This swaps in the right configs, marks the binary executable, and clears macOS Gatekeeper quarantine. Then run `/reload-plugins` in Claude Code/Codex, or restart the app.
+
+Codex prints the installed plugin root after `codex plugin add neostack-connect@neostack`. For marketplace installs, it is usually:
+
+- Windows: `%USERPROFILE%\.codex\plugins\cache\neostack\neostack-connect\0.1.3`
+- macOS / Linux: `~/.codex/plugins/cache/neostack/neostack-connect/0.1.3`
 
 Tracking upstream — env var expansion in Codex MCP config: [openai/codex#2680](https://github.com/openai/codex/issues/2680). Once that lands we collapse the four configs back into one.
-
-Claude Code has none of this — it expands `${CLAUDE_PLUGIN_ROOT}` natively, so `.mcp.json` works cross-platform with no setup step.
 
 ## Building from source
 
 ```bash
 cd proxy
-bun install
-bun run build              # cross-compiles to bin/{win64,macos-arm64,macos-x64,linux-x64}/
-bun run build win64        # only one target
-bun run dev                # run from source against current cwd
+bash build.sh              # cross-compiles to ../bin/{win64,macos-arm64,macos-x64,linux-x64}/
+bash build.sh win64        # only one target
 ```

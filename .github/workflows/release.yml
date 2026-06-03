@@ -49,6 +49,23 @@ jobs:
             (cd "$mcpb_dir" && bash build.sh)
           done
 
+      - name: Sign .mcpb Desktop Extensions
+        if: ${{ secrets.MCPB_SIGN_CERT_PEM != '' && secrets.MCPB_SIGN_KEY_PEM != '' }}
+        env:
+          MCPB_SIGN_CERT_PEM: ${{ secrets.MCPB_SIGN_CERT_PEM }}
+          MCPB_SIGN_KEY_PEM: ${{ secrets.MCPB_SIGN_KEY_PEM }}
+        run: |
+          set -e
+          cert="$(mktemp)"
+          key="$(mktemp)"
+          printf '%s' "$MCPB_SIGN_CERT_PEM" > "$cert"
+          printf '%s' "$MCPB_SIGN_KEY_PEM" > "$key"
+          for bundle in plugins/*/mcpb/dist/*.mcpb; do
+            mcpb sign --cert "$cert" --key "$key" "$bundle"
+            mcpb verify "$bundle"
+          done
+          rm -f "$cert" "$key"
+
       - name: Build plugin .zip (for Claude Desktop "Upload local plugin")
         run: |
           set -e

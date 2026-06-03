@@ -1,7 +1,7 @@
 {
   "mcpServers": {
     "neostack": {
-      "command": "${CLAUDE_PLUGIN_ROOT}/bin/win64/neostack-mcp-proxy.exe",
+      "command": "${CLAUDE_PLUGIN_ROOT}/bin/linux-x64/neostack-mcp-proxy",
       "env": {
         "NEOSTACK_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}"
       }
